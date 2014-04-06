@@ -1,0 +1,15 @@
+<template name="imageUploader">
+    <h1>Uploaded Pictures</h1>
+    {{#each images}}
+        <div>
+            <img src="{{url}}" alt="thumbnail">
+            <img src="{{images_full_res_url}}" alt="full image">
+            <input type="button" value="remove" class="btnRemove"/>
+        </div>
+    {{else}}
+        No pictures uploaded yet.
+    {{/each}}
+    <h3>Upload a picture:</h3>
+    <input name="files" id="files" type="file" multiple>
+    <br>
+</template>
