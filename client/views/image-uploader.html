@@ -2,8 +2,8 @@
     <h1>Uploaded Pictures</h1>
     {{#each images}}
         <div>
-            <img src="{{url}}" alt="thumbnail">
-            <img src="{{images_full_res_url}}" alt="full image">
+            <a href="{{images_full_res_url}}"><img src="{{url}}" alt="thumbnail"></a>
+            <a href="{{images_full_res_url}}"><img src="{{images_full_res_url}}" alt="full image"></a>
             <input type="button" value="remove" class="btnRemove"/>
         </div>
     {{else}}
