@@ -5,7 +5,7 @@ BACKET_A will be for public access, while BUCKET_B for private data.
 
 In order to set-up S3 access, follow the instruction on *S3 Setup* paragpraph on the [cfs-s3](https://github.com/CollectionFS/Meteor-cfs-s3) README.md and paste the following policy
 
-'''json
+``` json
 {
   "Statement": [
     {
@@ -33,11 +33,11 @@ In order to set-up S3 access, follow the instruction on *S3 Setup* paragpraph on
     }
   ]
 }
-'''
+```
 
 After this, in order to get public access to BUCKET_A, go to your bucket properties, look for the section *Permissions*, press *Edit bucket policy* and paste the following:
 
-'''json
+``` json
 {
 	"Statement": [
 		{
@@ -51,7 +51,7 @@ After this, in order to get public access to BUCKET_A, go to your bucket propert
 		}
 	]
 }
-'''
+```
 
 Honestly I supposed this not to be necessary to get public access to uploaded files, but setting ACL option to *public* neither setting it to *public-read* succeded in setting public access to uploaded files. I also tried to add `'x-amz-acl': 'public-read'` among the options for the store, but without success...  I'd need to study a bit more.
 
@@ -64,7 +64,7 @@ Finally insert into start.sh your credentials to access S3 for the user created 
 
 What I came up with to provide direct links to uploaded files is this global helper (have a look near the end of *lib/models/images.js*)
 
-'''javascript
+``` javascript
 if (Meteor.isClient) {
     Handlebars.registerHelper('images_full_res_url', function() {
         if (this.isMounted() && this.isUploaded() && this.getFileRecord())
@@ -72,22 +72,22 @@ if (Meteor.isClient) {
         return this.url({store: 'images_full_res'});
     });
 }
-'''
+```
 
 which permits something like this:
 
-'''html
+``` html
 {{#each images}}
     <div><img src="{{images_full_res_url}}" alt="full image"></div>
 {{else}}
     No pictures uploaded yet.
 {{/each}}
-'''
+```
 
 Basically I provide the base url for direct access into the settings.js file and use the image *store* object to get the actual folder and file names.
 
 
-when you upload an image you'll get to images in the top list. One for the thumbnail and the other for the full-resolution version.
+when you upload an image you'll get to images in the top list. One for the thumbnail and the other for the full-resolution version.
 The link for the thumbnail is the regular one provided by cfs, while the other is a direct link to the S3 bucket.
 You'll probably notice that this last one is usually broken just after the image upload, but it works if you reload the page.
 This is probably due to the latency needed by S3 to make the file available. I also tried to exploit the *isUploaded()* method of FS.File object, but still seems to reactive with respect to actual availability of S3.
