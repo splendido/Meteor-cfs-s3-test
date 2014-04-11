@@ -53,7 +53,8 @@ After this, in order to get public access to BUCKET_A, go to your bucket propert
 }
 ```
 
-Honestly I supposed this not to be necessary to get public access to uploaded files, but setting ACL option to *public* neither setting it to *public-read* succeded in setting public access to uploaded files. I also tried to add `'x-amz-acl': 'public-read'` among the options for the store, but without success...  I'd need to study a bit more.
+Honestly I supposed this not to be necessary to get public access to uploaded files, but setting ACL option to *public* neither setting it to *public-read* succeded in setting public access to uploaded files. I also tried to add `'x-amz-acl': 'public-read'` among the options for the store, but without success...
+Btw, the above problem seems fixed now: have a look [here](https://github.com/CollectionFS/Meteor-cfs-s3/pull/12)
 
 
 Then open settings.js and put in your buckets' *name*, *region*, and *directUrlBase*.
